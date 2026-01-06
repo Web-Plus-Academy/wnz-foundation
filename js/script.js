@@ -1,0 +1,290 @@
+// ========================================
+// WebNExZ Foundation - JavaScript
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize all components
+    initNavbar();
+    initMobileMenu();
+    initAnimations();
+    initApplicationForm();
+});
+
+// ----------------------------------------
+// Navbar Scroll Effect
+// ----------------------------------------
+function initNavbar() {
+    const navbar = document.querySelector('.navbar');
+
+    if (!navbar) return;
+
+    function handleScroll() {
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+}
+
+// ----------------------------------------
+// Mobile Menu Toggle
+// ----------------------------------------
+function initMobileMenu() {
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const menuIcon = document.querySelector('.menu-icon');
+    const closeIcon = document.querySelector('.close-icon');
+
+    if (!menuBtn || !mobileMenu) return;
+
+    menuBtn.addEventListener('click', function () {
+        const isOpen = mobileMenu.classList.toggle('open');
+
+        if (menuIcon && closeIcon) {
+            menuIcon.style.display = isOpen ? 'none' : 'block';
+            closeIcon.style.display = isOpen ? 'block' : 'none';
+        }
+    });
+
+    // Close menu when clicking a link
+    const mobileLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
+    mobileLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+            mobileMenu.classList.remove('open');
+            if (menuIcon && closeIcon) {
+                menuIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            }
+        });
+    });
+}
+
+// ----------------------------------------
+// Scroll Animations
+// ----------------------------------------
+function initAnimations() {
+    const animatedElements = document.querySelectorAll('[data-animate]');
+
+    if (animatedElements.length === 0) return;
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    animatedElements.forEach(function (el) {
+        observer.observe(el);
+    });
+}
+
+// ----------------------------------------
+// Application Form
+// ----------------------------------------
+function initApplicationForm() {
+    const form = document.getElementById('application-form');
+    const formContainer = document.getElementById('form-container');
+    const successContainer = document.getElementById('success-container');
+
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Get form values
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const college = document.getElementById('college').value.trim();
+        const whyJoin = document.getElementById('whyJoin').value.trim();
+        const commitment = document.getElementById('commitment').checked;
+
+        // Validation
+        if (!name || !email || !college || !whyJoin) {
+            showToast('Please fill in all required fields.', 'error');
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            showToast('Please enter a valid email address.', 'error');
+            return;
+        }
+
+        if (!commitment) {
+            showToast('Please confirm your commitment to the fellowship.', 'error');
+            return;
+        }
+
+        // WhatsApp message format
+        const message = `
+*New Fellowship Application*
+
+Name: ${name}
+Email: ${email}
+College / Status: ${college}
+
+Why Join:
+${whyJoin}
+
+✅ Commitment: Confirmed
+    `.trim();
+
+        const whatsappNumber = "8886200010";
+        const whatsappURL = `https://wa.me/91${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+        // Loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<div class="spinner"></div> Sending...';
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+
+            // UI success
+            if (formContainer && successContainer) {
+                formContainer.classList.add('hidden');
+                successContainer.classList.remove('hidden');
+            }
+
+            showToast('Redirecting to WhatsApp...', 'success');
+
+            // Reset button
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }, 800);
+    });
+}
+
+
+// ----------------------------------------
+// Utility Functions
+// ----------------------------------------
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function showToast(message, type) {
+    // Remove existing toasts
+    const existingToasts = document.querySelectorAll('.toast');
+    existingToasts.forEach(function (toast) {
+        toast.remove();
+    });
+
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = 'toast toast-' + type;
+    toast.textContent = message;
+
+    // Add styles
+    toast.style.cssText = `
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    background: ${type === 'success' ? '#22c55e' : '#ef4444'};
+    color: white;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+    box-shadow: 0 10px 40px -10px ${type === 'success' ? 'rgba(34, 197, 94, 0.5)' : 'rgba(239, 68, 68, 0.5)'};
+  `;
+
+    // Add animation keyframes if not exists
+    if (!document.getElementById('toast-styles')) {
+        const style = document.createElement('style');
+        style.id = 'toast-styles';
+        style.textContent = `
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes slideOut {
+        from {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+      }
+    `;
+        document.head.appendChild(style);
+    }
+
+    document.body.appendChild(toast);
+
+    // Remove after 3 seconds
+    setTimeout(function () {
+        toast.style.animation = 'slideOut 0.3s ease-out forwards';
+        setTimeout(function () {
+            toast.remove();
+        }, 300);
+    }, 3000);
+}
+
+// ----------------------------------------
+// Smooth Scroll for Anchor Links
+// ----------------------------------------
+document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// ----------------------------------------
+// Active Nav Link Highlighting
+// ----------------------------------------
+function setActiveNavLink() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+
+    navLinks.forEach(function (link) {
+        const href = link.getAttribute('href');
+
+        // Handle index page
+        if (currentPath === '/' || currentPath === '/index.html') {
+            if (href === 'index.html' || href === './index.html' || href === '/') {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        } else if (currentPath.includes(href.replace('.html', '').replace('./', ''))) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+
+// Run on page load
+setActiveNavLink();

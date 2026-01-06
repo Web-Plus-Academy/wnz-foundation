@@ -402,6 +402,7 @@ img {
   padding-top: 5rem;
 }
 
+
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -414,7 +415,7 @@ img {
   left: 25%;
   width: 24rem;
   height: 24rem;
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(59, 131, 246, 0.301);
   border-radius: 50%;
   filter: blur(80px);
 }
@@ -425,7 +426,7 @@ img {
   right: 25%;
   width: 16rem;
   height: 16rem;
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(59, 131, 246, 0.185);
   border-radius: 50%;
   filter: blur(60px);
 }
@@ -862,6 +863,139 @@ img {
   height: 1.25rem;
 }
 
+
+.badge-closed {
+  background: rgba(0, 100, 255, 0.15);
+  color: #9dbbff;
+  border: 1px solid rgba(0, 100, 255, 0.4);
+}
+
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.time-box {
+  background: #0b0f1a;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 1.5rem 1.8rem;
+  border-radius: 12px;
+  min-width: 90px;
+}
+
+.time-box span {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4da3ff;
+  display: block;
+}
+
+.time-box small {
+  font-size: 0.8rem;
+  color: #aaa;
+  letter-spacing: 0.05em;
+}
+
+
+/* =========================
+   Countdown Timer – Mobile
+   ========================= */
+
+@media (max-width: 768px) {
+  .countdown-timer {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .time-box {
+    flex: 1 1 calc(50% - 1rem); /* 2 boxes per row */
+    min-width: 140px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+  }
+
+  .time-box span {
+    font-size: 1.8rem;
+  }
+
+  .time-box small {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+}
+
+
+/* =========================
+   Leadership Section
+   ========================= */
+
+.leadership-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+}
+
+.leader-photo {
+  flex-shrink: 0;
+}
+
+.leader-photo img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(79, 140, 255, 0.6);
+}
+
+.leader-info {
+  flex: 1;
+}
+
+.leader-role {
+  color: #8fb6ff;
+  font-weight: 600;
+  margin: 0.3rem 0 1.2rem;
+}
+
+.leader-description {
+  color: #d1d1d1;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+/* =========================
+   Mobile View
+   ========================= */
+
+@media (max-width: 768px) {
+  .leadership-wrapper {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .leader-photo img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .leader-description {
+    font-size: 0.95rem;
+  }
+}
+
+
+
 /* Form Elements */
 .form-group {
   margin-bottom: 1.5rem;
@@ -1146,10 +1280,12 @@ img {
 
 /* Note Box */
 .note-box {
-  padding-left: 1rem;
-  border-left: 2px solid var(--primary);
+  padding: 1rem;
+  border-left: 5px solid var(--primary);
   font-size: 0.875rem;
   color: var(--muted-foreground);
+  border-radius: 5px;
+  background-color: #003f8d27;
 }
 
 .note-box strong {
@@ -1210,10 +1346,77 @@ img {
   }
 }
 
+
+
+/* ==============================
+   Hero Floating SVG Icons
+   ============================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-floating-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.float-icon {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  color: rgba(143, 182, 255, 0.25);
+  animation: floatMove 12s ease-in-out infinite;
+}
+
+/* Individual positions */
+.icon-1 {
+  top: 20%;
+  left: 8%;
+  animation-duration: 14s;
+}
+
+.icon-2 {
+  top: 35%;
+  right: 10%;
+  animation-duration: 18s;
+}
+
+.icon-3 {
+  bottom: 20%;
+  left: 50%;
+  animation-duration: 16s;
+}
+
+/* Floating animation */
+@keyframes floatMove {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-18px) translateX(8px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* Hide floating icons on small screens */
+@media (max-width: 768px) {
+  .hero-floating-icons {
+    display: none;
+  }
+}
+
+
 /* Page Header */
 .page-header {
   padding-top: 8rem;
   padding-bottom: 5rem;
+  background: radial-gradient(circle at top, rgba(79, 140, 255, 0.18), transparent 60%);
 }
 
 .page-header .container {
@@ -1314,16 +1517,16 @@ img {
 
 .partner-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .partner-icon {
-  width: 4rem;
-  height: 4rem;
-  background: rgba(59, 130, 246, 0.1);
-  border-radius: 1rem;
+  width: 6rem;
+  height: 6rem;
+  background: rgba(0, 128, 255, 0.511);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1339,6 +1542,7 @@ img {
 .partner-name {
   color: var(--primary);
   font-weight: 500;
+  font-size: 1rem;
 }
 
 .partner-details {
@@ -1797,5 +2001,605 @@ img {
   .error-buttons {
     flex-direction: row;
     justify-content: center;
+  }
+}
+
+
+
+
+/* ==============================
+   WebNexZ Entrance Exam Section
+   ============================== */
+
+.wnx-exam-section {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+}
+
+/* Section blocks */
+.wnx-exam-block {
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+/* Section titles */
+.wnx-exam-title {
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin-bottom: 1.4rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+.wnx-exam-title::after {
+  content: "";
+  display: block;
+  width: 52px;
+  height: 3px;
+  margin-top: 0.6rem;
+  background: linear-gradient(90deg, #4f8cff, #8fb6ff);
+  border-radius: 2px;
+}
+
+/* Paragraph text */
+.wnx-exam-text {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #cfd6e4;
+  margin-bottom: 1.1rem;
+}
+
+/* ==============================
+   Lists
+   ============================== */
+
+.wnx-exam-list {
+  padding-left: 1.4rem;
+}
+
+.wnx-exam-list li {
+  margin-bottom: 0.8rem;
+  color: #d6dbea;
+  line-height: 1.65;
+}
+
+/* ==============================
+   Exam Structure Box
+   ============================== */
+
+.wnx-exam-structure {
+  background: linear-gradient(
+    180deg,
+    rgba(79, 140, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(79, 140, 255, 0.25);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.wnx-exam-structure p {
+  margin-bottom: 0.7rem;
+  color: #e1e6f2;
+}
+
+.wnx-exam-structure strong {
+  color: #ffffff;
+}
+
+/* ==============================
+   Syllabus Grid
+   ============================== */
+
+.wnx-exam-syllabus {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.2rem;
+  margin-top: 2.5rem;
+}
+
+.wnx-exam-syllabus-item {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 2rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wnx-exam-syllabus-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}
+
+.wnx-exam-syllabus-item h3 {
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.wnx-exam-syllabus-item ul {
+  padding-left: 1.2rem;
+}
+
+.wnx-exam-syllabus-item li {
+  margin-bottom: 0.65rem;
+  color: #d1d7e6;
+  line-height: 1.6;
+}
+
+/* ==============================
+   Mobile & Tablet
+   ============================== */
+
+@media (max-width: 768px) {
+  .wnx-exam-section {
+    padding: 4rem 1.2rem;
+  }
+
+  .wnx-exam-title {
+    font-size: 1.6rem;
+  }
+
+  .wnx-exam-text {
+    font-size: 1rem;
+  }
+
+  .wnx-exam-syllabus {
+    grid-template-columns: 1fr;
+  }
+
+  .wnx-exam-syllabus-item {
+    padding: 1.6rem;
+  }
+}
+
+
+/* ==============================
+   Blue Bullet Points (Left Side)
+   ============================== */
+
+.wnx-exam-list,
+.wnx-exam-syllabus-item ul {
+  list-style: none;
+  padding-left: 1.4rem;
+}
+
+.wnx-exam-list li,
+.wnx-exam-syllabus-item li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #d6dbea;
+  line-height: 1.65;
+}
+
+/* Blue dot */
+.wnx-exam-list li::before,
+.wnx-exam-syllabus-item li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  background: linear-gradient(135deg, #4f8cff, #8fb6ff);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.18);
+}
+
+
+
+
+
+/* ==============================
+   WebNexZ FAQ Page
+   ============================== */
+
+.wnx-faq-header {
+  padding: 4rem 1.5rem 4rem;
+  text-align: center;
+  background: radial-gradient(circle at top, rgba(79,140,255,0.18), transparent 60%);
+}
+
+.wnx-faq-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.wnx-faq-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: rgba(79, 140, 255, 0.15);
+  color: #8fb6ff;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.wnx-faq-title {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.wnx-faq-title span {
+  background: linear-gradient(90deg, #4f8cff, #8fb6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wnx-faq-subtitle {
+  font-size: 1.1rem;
+  color: #cfd6e4;
+}
+
+/* FAQ Section */
+.wnx-faq-section {
+  padding: 4rem 1.5rem;
+}
+
+.wnx-faq-item {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.wnx-faq-question {
+  width: 100%;
+  padding: 1.5rem;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.wnx-faq-question:hover {
+  background: rgba(79, 140, 255, 0.08);
+}
+
+.wnx-faq-icon {
+  font-size: 1.5rem;
+  color: #8fb6ff;
+  transition: transform 0.3s ease;
+}
+
+.wnx-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding: 0 1.5rem;
+}
+
+.wnx-faq-answer p {
+  padding-bottom: 1.5rem;
+  color: #d6dbea;
+  line-height: 1.7;
+}
+
+/* Active State */
+.wnx-faq-item.active .wnx-faq-answer {
+  max-height: 300px;
+}
+
+.wnx-faq-item.active .wnx-faq-icon {
+  transform: rotate(45deg);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .wnx-faq-title {
+    font-size: 2rem;
+  }
+
+  .wnx-faq-question {
+    font-size: 1rem;
+  }
+}
+
+
+
+/* ==============================
+   Go Home Button (FAQ)
+   ============================== */
+
+.wnx-faq-home-btn {
+  margin-top: 2rem;
+}
+
+.wnx-faq-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(79, 140, 255, 0.4);
+  color: #8fb6ff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.wnx-faq-home-link:hover {
+  background: rgba(79, 140, 255, 0.15);
+  color: #ffffff;
+  transform: translateX(-2px);
+}
+
+
+
+/* ==============================
+   WebNexZ Contact Page
+   ============================== */
+
+.wnx-contact-header {
+  padding: 4rem 1.5rem 4rem;
+  text-align: center;
+  background: radial-gradient(circle at top, rgba(79,140,255,0.2), transparent 60%);
+}
+
+.wnx-contact-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.wnx-contact-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: rgba(79, 140, 255, 0.15);
+  color: #8fb6ff;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.wnx-contact-title {
+  font-size: 2.6rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.wnx-contact-title span {
+  background: linear-gradient(90deg, #4f8cff, #8fb6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wnx-contact-subtitle {
+  font-size: 1.1rem;
+  color: #cfd6e4;
+}
+
+.wnx-contact-home {
+  margin-top: 2rem;
+}
+
+.wnx-contact-home-link {
+  display: inline-flex;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(79,140,255,0.4);
+  color: #8fb6ff;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+}
+
+.wnx-contact-home-link:hover {
+  background: rgba(79,140,255,0.15);
+  color: #ffffff;
+}
+
+/* Grid */
+.wnx-contact-section {
+  padding: 4rem 1.5rem;
+}
+
+.wnx-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+/* Contact Info */
+.wnx-contact-info h2,
+.wnx-contact-form h2 {
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.wnx-contact-item {
+  margin-bottom: 1.2rem;
+}
+
+.wnx-contact-item strong {
+  display: block;
+  color: #8fb6ff;
+  margin-bottom: 0.3rem;
+}
+
+.wnx-contact-item a,
+.wnx-contact-item p {
+  color: #d6dbea;
+}
+
+.wnx-contact-note {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  color: #aab2c8;
+}
+
+/* Form */
+.wnx-contact-form {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px;
+  padding: 2.5rem;
+}
+
+.wnx-contact-field {
+  margin-bottom: 1.3rem;
+}
+
+.wnx-contact-field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: #cfd6e4;
+}
+
+.wnx-contact-field input,
+.wnx-contact-field textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: #0b1022;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.wnx-contact-field input:focus,
+.wnx-contact-field textarea:focus {
+  outline: none;
+  border-color: #4f8cff;
+}
+
+/* Button */
+.wnx-contact-btn {
+  margin-top: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(90deg, #4f8cff, #8fb6ff);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wnx-contact-btn:hover {
+  opacity: 0.9;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .wnx-contact-title {
+    font-size: 2rem;
+  }
+
+  .wnx-contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wnx-contact-form {
+    padding: 2rem 1.5rem;
+  }
+}
+
+
+/* ==============================
+   SVG Notify Me Button
+   ============================== */
+
+.wnx-notify-btn {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(79, 140, 255, 0.5);
+  background: rgba(79, 140, 255, 0.12);
+  color: #8fb6ff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.wnx-notify-btn:hover {
+  background: rgba(79, 140, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* SVG Icon */
+.wnx-notify-icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+}
+
+
+/* ==============================
+   Hero Floating SVG Icons
+   ============================== */
+
+
+.hero-floating-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.float-icon {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  color: rgba(143, 182, 255, 0.25);
+  animation: floatMove 12s ease-in-out infinite;
+   opacity: 0.32;
+}
+
+/* Individual positions */
+/* Top arc */
+.icon-1  { top: 12%; left: 50%; transform: translateX(-50%); }
+.icon-2  { top: 18%; left: 68%; transform: translateX(-50%); }
+.icon-3  { top: 26%; left: 82%; transform: translateX(-50%); }
+
+/* Right arc */
+.icon-4  { top: 44%; left: 88%; transform: translateX(-50%); }
+.icon-5  { top: 62%; left: 80%; transform: translateX(-50%); }
+
+/* Bottom arc */
+.icon-6  { top: 76%; left: 50%; transform: translateX(-50%); }
+.icon-7  { top: 70%; left: 32%; transform: translateX(-50%); }
+
+/* Left arc */
+.icon-8  { top: 56%; left: 14%; transform: translateX(-50%); }
+.icon-9  { top: 38%; left: 18%; transform: translateX(-50%); }
+
+/* Inner offset (breaks perfect circle) */
+.icon-10 { top: 48%; left: 62%; transform: translateX(-50%); }
+
+
+
+/* Floating animation */
+@keyframes floatMove {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-18px) translateX(8px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* Hide floating icons on small screens */
+@media (max-width: 768px) {
+  .hero-floating-icons {
+    display: block;
+    opacity: 0.42;
   }
 }

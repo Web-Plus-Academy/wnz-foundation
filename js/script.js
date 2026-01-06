@@ -288,3 +288,115 @@ function setActiveNavLink() {
 
 // Run on page load
 setActiveNavLink();
+
+
+const APPLICATION_OPEN_DATE = "2026-01-19T18:00:00+05:30";
+
+
+function initCountdown() {
+    const openTime = new Date(APPLICATION_OPEN_DATE).getTime();
+
+    const countdownSection = document.getElementById("countdown-section");
+    const formContainer = document.getElementById("form-container");
+    const appStatus = document.getElementById("app-status");
+    const openDateText = document.getElementById("open-date-text");
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    const openDateObj = new Date(openTime);
+
+    // 🔹 Auto-update date text
+    openDateText.innerHTML = `
+    <strong>${openDateObj.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    })}</strong>
+    at
+    <strong>${openDateObj.toLocaleTimeString("en-IN", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+    })} IST</strong>
+  `;
+
+    // 🔹 Helper functions
+    function hideFormShowTimer() {
+        formContainer?.classList.add("hidden");
+        countdownSection?.classList.remove("hidden");
+
+        appStatus.textContent = "Applications Not Open Yet";
+        appStatus.classList.add("badge-closed");
+    }
+
+    function showFormHideTimer() {
+        formContainer?.classList.remove("hidden");
+        countdownSection?.classList.add("hidden");
+
+        appStatus.textContent = "Applications Open";
+        appStatus.classList.remove("badge-closed");
+    }
+
+    // 🔹 INITIAL STATE CHECK (IMPORTANT)
+    const now = Date.now();
+
+    if (now < openTime) {
+        hideFormShowTimer();
+    } else {
+        showFormHideTimer();
+        return; // ⛔ stop countdown completely
+    }
+
+    // 🔹 COUNTDOWN LOOP
+    const timer = setInterval(() => {
+        const currentTime = Date.now();
+        const distance = openTime - currentTime;
+
+        if (distance <= 0) {
+            clearInterval(timer);
+            showFormHideTimer();
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((distance / (1000 * 60)) % 60);
+        const seconds = Math.floor((distance / 1000) % 60);
+
+        daysEl.textContent = String(days).padStart(2, "0");
+        hoursEl.textContent = String(hours).padStart(2, "0");
+        minutesEl.textContent = String(minutes).padStart(2, "0");
+        secondsEl.textContent = String(seconds).padStart(2, "0");
+    }, 1000);
+}
+
+
+// Call it
+document.addEventListener("DOMContentLoaded", () => {
+    initCountdown();
+    initApplicationForm();
+});
+
+
+
+
+document.getElementById("wnxNotifyBtn").addEventListener("click", function () {
+    const whatsappNumber = "918886200010";
+
+    const message = `
+Hi WebNexZ Foundation Team,
+Please notify me when fellowship applications open.
+    `;
+
+    const url =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        encodeURIComponent(message);
+
+    window.open(url, "_blank");
+});
+

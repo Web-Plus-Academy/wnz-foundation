@@ -262,32 +262,26 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 });
 
 // ----------------------------------------
-// Active Nav Link Highlighting
+// Active Nav Link Highlighting (FIXED)
 // ----------------------------------------
 function setActiveNavLink() {
-    const currentPath = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
 
-    navLinks.forEach(function (link) {
-        const href = link.getAttribute('href');
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
 
-        // Handle index page
-        if (currentPath === '/' || currentPath === '/index.html') {
-            if (href === 'index.html' || href === './index.html' || href === '/') {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        } else if (currentPath.includes(href.replace('.html', '').replace('./', ''))) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
-    });
+    if (href === currentPath) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
 }
 
 // Run on page load
 setActiveNavLink();
+
 
 
 const APPLICATION_OPEN_DATE = "2026-01-19T18:00:00+05:30";

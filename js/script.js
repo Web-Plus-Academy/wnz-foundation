@@ -261,26 +261,45 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     });
 });
 
+
 // ----------------------------------------
 // Active Nav Link Highlighting (FIXED)
 // ----------------------------------------
 function setActiveNavLink() {
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+    const currentPath = window.location.pathname.replace(/\/$/, '');
+    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
 
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
 
-    if (href === currentPath) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
-    }
-  });
+        // Normalize href
+        let linkPath = href
+            .replace('./', '')
+            .replace('index.html', '')
+            .replace('.html', '')
+            .replace(/\/$/, '');
+
+        // Normalize current path
+        let pagePath = currentPath
+            .replace('/index.html', '')
+            .replace('.html', '');
+
+        if (pagePath === '') pagePath = '/';
+
+        if (pagePath === '/' && (linkPath === '' || linkPath === '/')) {
+            link.classList.add('active');
+        } 
+        else if (pagePath === `/${linkPath}`) {
+            link.classList.add('active');
+        } 
+        else {
+            link.classList.remove('active');
+        }
+    });
 }
 
-// Run on page load
-setActiveNavLink();
+// Call on page load
+document.addEventListener('DOMContentLoaded', setActiveNavLink);
 
 
 
